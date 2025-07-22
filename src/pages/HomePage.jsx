@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -14,37 +14,44 @@ import EditIcon from "@mui/icons-material/Edit";
 
 function HomePage() {
   const [category, setCategory] = useState("");
-   const [Sort_By, setSort_By] = useState("");
+  const [Sort_By, setSort_By] = useState("");
   return (
     <Container>
-      <Typography variant="h3">All Notes </Typography>
-      <FormControl fullWidth sx={{ mt: "20px" }}>
-        <InputLabel id="note_category_label">Category</InputLabel>
-        <Select
-          labelId="note_category_label"
-          id="note_category"
-          label="Category"
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-        >
-          <MenuItem value={"Personal"}>Personal</MenuItem>
-          <MenuItem value={"Work"}>Work</MenuItem>
-          <MenuItem value={"Idea"}>Idea</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl fullWidth sx={{ mt: "20px" }}>
-        <InputLabel id="note_Sort_By_label">Sort_By</InputLabel>
-        <Select
-          labelId="note_Sort_By_label"
-          id="note_Sort_By"
-          label="Sort_By"
-          value={Sort_By}
-          onChange={(event) => setSort_By(event.target.value)}
-        >
-          <MenuItem value={"Last Updated"}>Last Updated</MenuItem>
-          <MenuItem value={"Title"}>Title</MenuItem>
-        </Select>
-      </FormControl>
+      <Box
+        style={{ display: "flex", justifyContent: "space-between", margin: 10 }}
+      >
+        <Typography variant="h3">All Notes</Typography>
+
+        <Box style={{ display: "flex" }}>
+          <FormControl fullWidth sx={{ mt: "20px" }}>
+            <InputLabel id="note_category_label">Category</InputLabel>
+            <Select
+              labelId="note_category_label"
+              id="note_category"
+              label="Category"
+              value={category}
+              onChange={(event) => setCategory(event.target.value)}
+            >
+              <MenuItem value={"Personal"}>Personal</MenuItem>
+              <MenuItem value={"Work"}>Work</MenuItem>
+              <MenuItem value={"Idea"}>Idea</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth sx={{ mt: "20px" }}>
+            <InputLabel id="note_Sort_By_label">Sort_By</InputLabel>
+            <Select
+              labelId="note_Sort_By_label"
+              id="note_Sort_By"
+              label="Sort_By"
+              value={Sort_By}
+              onChange={(event) => setSort_By(event.target.value)}
+            >
+              <MenuItem value={"Last Updated"}>Last Updated</MenuItem>
+              <MenuItem value={"Title"}>Title</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography
