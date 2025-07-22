@@ -1,72 +1,84 @@
-import { Box, Paper, Typography } from "@mui/material";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import TextField from "@mui/material/TextField";
+import {
+  Container,
+  Box,
+  Typography,
+  Paper,
+  TextField,
+  Button,
+  InputLabel,
+} from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Edit, Delete } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 function CategoriesPage() {
   return (
-    <Container>
-      <Typography variant="h3">Manage Categories </Typography>
-      <Paper
-        style={{ display: "flex", justifyContent: "space-between", margin: 10 }}
-      >
-        <Typography variant="h5">
-          Add New Category
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Category Name"
-            variant="outlined"
-            style={{ margin: 10 }}
-          ></TextField>
-        </Typography>
-        <Button variant="contained">Add</Button>
-      </Paper>
-      <Paper>
-        <Typography variant="h5">Existing Categories </Typography>
+    <>
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h4">Manage Categories</Typography>
         <Paper
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: 10,
+          elevation={3}
+          sx={{
+            p: "20px",
+            mt: "20px",
           }}
         >
-          <Typography variant="h6">personal </Typography>
-          <Box>
-            <EditIcon />
-            <DeleteIcon />
+          <InputLabel>Add New Category</InputLabel>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "10px",
+              mt: "5px",
+            }}
+          >
+            <TextField
+              fullWidth
+              label="Category"
+              variant="outlined"
+              // value={title}
+              // onChange={(event) => setTitle(event.target.value)}
+            />
+            <Button color="primary" variant="contained">
+              Add
+            </Button>
           </Box>
         </Paper>
         <Paper
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: 10,
+          elevation={3}
+          sx={{
+            p: "20px",
+            mt: "20px",
           }}
         >
-          <Typography variant="h6">work </Typography>{" "}
-          <Box>
-            <EditIcon />
-            <DeleteIcon />
-          </Box>
+          <InputLabel>Existing Categories (3)</InputLabel>
+          <List sx={{ width: "100%" }}>
+            {["Personal", "Work", "Idea"].map((value) => (
+              <ListItem
+                key={value}
+                disableGutters
+                divider
+                secondaryAction={
+                  <Box sx={{ display: "flex", gap: "10px" }}>
+                    <IconButton>
+                      <Edit />
+                    </IconButton>
+                    <IconButton disabled>
+                      <Delete />
+                    </IconButton>
+                  </Box>
+                }
+              >
+                <ListItemText primary={`${value}`} />
+              </ListItem>
+            ))}
+          </List>
         </Paper>
-        <Paper
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: 10,
-          }}
-        >
-          <Typography variant="h6">ideas </Typography>{" "}
-          <Box>
-            <EditIcon />
-            <DeleteIcon />
-          </Box>
-        </Paper>
-      </Paper>
-    </Container>
+      </Container>
+    </>
   );
 }
 
