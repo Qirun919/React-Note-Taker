@@ -7,14 +7,61 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Editor from "react-simple-wysiwyg";
+import { nanoid } from "nanoid";
+import { toast } from "sonner";
+
+/*
+   notes structure:
+  [
+     {
+         id: "denfne8j3m_ud83", // nanoid
+         title: "New note",
+         category: "nmrj_kj7743", // category id from categories
+         content: "vanakam to <b>forward college</b>",
+         updatedAt: 1736489494585 (timestamp) 
+      }
+  ]
+*/
 
 function AddNewPage() {
-  /*
-    rule for form fields state: one state for one field
-  */
+  // 1. load the categories data from local storage
+  const dataInLocalStorage = localStorage.getItem("categories");
+  // 2. create a state to store the categories data from local storage
+  const [categories, setCategories] = useState(
+    dataInLocalStorage ? JSON.parse(dataInLocalStorage) : []
+  );
+  // 3. load the notes data from local storage
+  const notesLocalStorage = localStorage.getItem("notes");
+  console.log(notesLocalStorage);
+  // 4. create a state to store the notes data from local storage
+  const [notes, setNotes] = useState(
+    notesLocalStorage ? JSON.parse(notesLocalStorage) : []
+  );
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("Welcome to <b>Forward College</b>");
+
+  const handleAddNew = () => {
+    // 6. check for error - make sure all the fields are fill up
+    if (title === "" || content === "" || category === "") {
+      toast("Please fill in the all the fields");
+    } else {
+      // 7. add the new note data into the notes state
+      const updatedNotes = [
+        ...notes,
+        {
+          id: nanoid(),
+          title: title,
+          content: content,
+          category: category,
+          updatedAt: new Date().valueOf(), // timestamp - seconds count since 1970 jan 1
+        },
+      ];
+      // // 8. update the notes in local storage
+      setNotes(updatedNotes);
+      localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    }
+  };
 
   return (
     <Container
@@ -45,12 +92,12 @@ function AddNewPage() {
             labelId="note_category_label"
             id="note_category"
             label="Category"
-            value={category}
             onChange={(event) => setCategory(event.target.value)}
           >
-            <MenuItem value={"Personal"}>Personal</MenuItem>
-            <MenuItem value={"Work"}>Work</MenuItem>
-            <MenuItem value={"Idea"}>Idea</MenuItem>
+            {/* 5. load the categories using .map - value pass in as category.id */}
+            {categories.map((category) => (
+              <MenuItem value={category.id}>{category.label}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <Box sx={{ mt: "20px" }}>
@@ -73,7 +120,7 @@ function AddNewPage() {
             mt: "20px",
           }}
         >
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={handleAddNew}>
             Save Note
           </Button>
           <Button component={RouterLink} to="/" variant="outlined">
