@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink, useNavigate } from "react-router";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,6 +24,8 @@ import { toast } from "sonner";
 */
 
 function AddNewPage() {
+  // setup useNavigate
+  const navigate = useNavigate();
   // 1. load the categories data from local storage
   const dataInLocalStorage = localStorage.getItem("categories");
   // 2. create a state to store the categories data from local storage
@@ -32,7 +34,6 @@ function AddNewPage() {
   );
   // 3. load the notes data from local storage
   const notesLocalStorage = localStorage.getItem("notes");
-  console.log(notesLocalStorage);
   // 4. create a state to store the notes data from local storage
   const [notes, setNotes] = useState(
     notesLocalStorage ? JSON.parse(notesLocalStorage) : []
@@ -60,6 +61,10 @@ function AddNewPage() {
       // // 8. update the notes in local storage
       setNotes(updatedNotes);
       localStorage.setItem("notes", JSON.stringify(updatedNotes));
+      // 9. show success message
+      toast("New note added");
+      // 10. redirect back to home page
+      navigate("/");
     }
   };
 
